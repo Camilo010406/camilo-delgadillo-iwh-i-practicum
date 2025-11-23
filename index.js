@@ -22,6 +22,23 @@ app.get("/update-cobj")
 
 // * Code for Route 3 goes here
 app.post("/update-cobj")
+
+// * Shows the form
+app.get('/update-cobj', (req, res) => {
+    res.render('updates', 
+        { title: 'Update Custom Object Form | Integrating With HubSpot I Practicum.' });
+});
+
+// Process the form
+app.post('/update-cobj', (req, res) => {
+  // Here I will add code to create or update custom object data using the HubSpot API.
+
+  // After processing, redirect to homepage
+  res.redirect('/');
+});
+
+
+
 /** 
 * * This is sample code to give you a reference for how you should structure your calls. 
 
