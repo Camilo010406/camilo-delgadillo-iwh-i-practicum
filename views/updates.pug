@@ -25,13 +25,32 @@ html
         input(type="text" name="name" id="name" required)
 
         label(for="type_of_game") Type of Game:
-        input(type="text" name="type_of_game" id="type_of_game")
+        select(name="type_of_game" id="type_of_game")
+            option(value="") -- Select a type --
+            option(value="Strategy") Strategy
+            option(value="Shooter") Shooter
+            option(value="Adventure") Adventure
+            option(value="Survival") Survival
+            option(value="Fighting") Fighting
 
-        label(for="gaming_platforms") Gaming Platforms:
-        input(type="text" name="gaming_platforms" id="gaming_platforms")
+        label Gaming Platforms:
+        div#platformContainer.platform-box
+            input(type="hidden" name="gaming_platforms" id="gaming_platforms")
+
+            button(type="button" class="platform-option" data-value="Xbox") Xbox
+            button(type="button" class="platform-option" data-value="Playstation") Playstation
+            button(type="button" class="platform-option" data-value="Android") Android
+            button(type="button" class="platform-option" data-value="IOs") IOs
+            button(type="button" class="platform-option" data-value="PC") PC
+            button(type="button" class="platform-option" data-value="Nintendo") Nintendo
+
 
         label(for="is_it_cross_platforms_") Cross-platform:
-        input(type="text" name="is_it_cross_platforms_" id="is_it_cross_platforms_")
+        select(name="is_it_cross_platforms_" id="is_it_cross_platforms_")
+            option(value="") -- Select value --
+            option(value="true") True
+            option(value="false") False
+
 
         button(type="submit") Submit
 
@@ -55,6 +74,28 @@ html
         //- console.log("DEBUG: objectIdLabel =", objectIdLabel);
         //- console.log("DEBUG: updateNote =", updateNote);
         //- console.log("DEBUG: typeGame/platforms/cross =", !!typeGame, !!platforms, !!cross);
+
+        const platformButtons = document.querySelectorAll(".platform-option");
+        const gamingPlatformsInput = document.getElementById("gaming_platforms");
+
+        let selectedPlatforms = [];
+
+        platformButtons.forEach(button => {
+            button.addEventListener("click", () => {
+                const value = button.dataset.value;
+
+                if (selectedPlatforms.includes(value)) {
+                    selectedPlatforms = selectedPlatforms.filter(p => p !== value);
+                    button.classList.remove("selected");
+                } else {
+                    selectedPlatforms.push(value);
+                    button.classList.add("selected");
+                }
+
+                gamingPlatformsInput.value = selectedPlatforms.join(";");
+            });
+        });
+
 
         if (!actionSelect) {
           console.error("Form script cannot find the action <select>. Check that your select has name=\"action\" or id=\"actionSelect\" and that the script is inside the <body> after the form.");

@@ -50,7 +50,9 @@ app.post('/update-cobj', async (req, res) => {
     const properties = { name };
 
     if (type_of_game) properties.type_of_game = type_of_game;
-    if (gaming_platforms) properties.gaming_platforms = gaming_platforms;
+    if (gaming_platforms) {
+    properties.gaming_platforms = gaming_platforms;
+    }
     if (is_it_cross_platforms_) properties.is_it_cross_platforms_ = is_it_cross_platforms_;
 
     let url = `https://api.hubapi.com/crm/v3/objects/2-53428859`;
