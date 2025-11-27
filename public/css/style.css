@@ -48,7 +48,7 @@ div {
 /* FORMS */
 label {
     font-weight: 500;
-    margin-top: .75rem;
+    margin-top: .90rem;
     color: var(--text-muted);
 }
 
@@ -64,6 +64,35 @@ input {
 input:focus {
     border-color: var(--primary);
     box-shadow: 0 0 0 2px rgba(15,185,177,0.2);
+}
+
+/* SELECT - Create / Update Mode */
+select {
+    width: 100%;
+    padding: .5rem .75rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background-color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(15,185,177,0.2);
+    outline: none;
+}
+
+/* INFO PARAGRAPH (Update mode message) */
+p.form-info {
+    margin-top: .75rem;
+    padding: .5rem .75rem;
+    background-color: rgba(15,185,177,0.1);
+    border-left: 4px solid var(--primary);
+    border-radius: var(--radius);
+    color: var(--text-muted);
+    font-size: .95rem;
 }
 
 /* BUTTONS */

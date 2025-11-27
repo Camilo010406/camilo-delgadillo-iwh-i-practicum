@@ -1,32 +1,92 @@
 doctype html
-html 
-    head 
-        title Integrating With HubSpot I Practicum
-        meta(name="viewport" content="width=device-width, initial-scale=1")
-        link(rel="stylesheet", href="/css/style.css")
-    body    
-        h1 Update / Create Custom Object Form | Integrating With HubSpot I Practicum.
-        div
-            h2 Fill the form below to update or create a custom object in HubSpot.
-            
-            form#updateForm(action="/update-cobj" method="POST")
-                label(for="name") Name:
-                input(type="text" name="name" id="name")
-                br
+html
+  head
+    title Integrating With HubSpot I Practicum
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+    link(rel="stylesheet", href="/css/style.css")
 
-                label(for="type_of_game") Type of Game:
-                input(type="text" name="type_of_game" id="type_of_game")
-                br
+  body
+    h1 Update / Create Custom Object Form | Integrating With HubSpot I Practicum.
 
-                label(for="gaming_platforms") Gaming Platforms:
-                input(type="text" name="gaming_platforms" id="gaming_platforms")
-                br
+    div
+      h2 Fill the form below to update or create a custom object in HubSpot.
 
-                label(for="is_it_cross_platforms_") Cross-platform:
-                input(type="text" name="is_it_cross_platforms_" id="is_it_cross_platforms_")
-                br
+      form(action="/update-cobj" method="POST")
 
-                button(type="submit") Submit
-                br  
+        label Action:
+        select(name="action" id="actionSelect" required)
+          option(value="create") Create
+          option(value="update") Update
 
-        a(href="/") Return to the homepage
+        label(for="objectId" id="objectIdLabel") Object ID:
+        input(type="text" name="objectId" id="objectId" placeholder="Required only for update")
+
+        label(for="name") Name:
+        input(type="text" name="name" id="name" required)
+
+        label(for="type_of_game") Type of Game:
+        input(type="text" name="type_of_game" id="type_of_game")
+
+        label(for="gaming_platforms") Gaming Platforms:
+        input(type="text" name="gaming_platforms" id="gaming_platforms")
+
+        label(for="is_it_cross_platforms_") Cross-platform:
+        input(type="text" name="is_it_cross_platforms_" id="is_it_cross_platforms_")
+
+        button(type="submit") Submit
+
+    a(href="/") Return to the homepage
+
+    script.
+      // safe DOM-ready wrapper + fallbacks
+      document.addEventListener('DOMContentLoaded', function() {
+        // try find by id first, then by name as fallback
+        let actionSelect = document.getElementById('actionSelect') || document.querySelector('select[name="action"]');
+        const objectId = document.getElementById('objectId') || document.querySelector('input[name="objectId"]');
+        const objectIdLabel = document.getElementById('objectIdLabel') || document.querySelector('label[for="objectId"]');
+        const updateNote = document.getElementById('updateNote') || null;
+
+        const typeGame = document.getElementById('type_of_game') || document.querySelector('input[name="type_of_game"]');
+        const platforms = document.getElementById('gaming_platforms') || document.querySelector('input[name="gaming_platforms"]');
+        const cross = document.getElementById('is_it_cross_platforms_') || document.querySelector('input[name="is_it_cross_platforms_"]');
+
+        //- console.log("DEBUG: actionSelect =", actionSelect);
+        //- console.log("DEBUG: objectId =", objectId);
+        //- console.log("DEBUG: objectIdLabel =", objectIdLabel);
+        //- console.log("DEBUG: updateNote =", updateNote);
+        //- console.log("DEBUG: typeGame/platforms/cross =", !!typeGame, !!platforms, !!cross);
+
+        if (!actionSelect) {
+          console.error("Form script cannot find the action <select>. Check that your select has name=\"action\" or id=\"actionSelect\" and that the script is inside the <body> after the form.");
+          return;
+        }
+
+        function toggleFormMode() {
+          if (actionSelect.value === "update") {
+            if (objectId) objectId.style.display = "block";
+            if (objectIdLabel) objectIdLabel.style.display = "block";
+            if (objectId) objectId.required = true;
+
+            if (typeGame) typeGame.required = false;
+            if (platforms) platforms.required = false;
+            if (cross) cross.required = false;
+          } else {
+            if (objectId) {
+              objectId.style.display = "none";
+              objectId.value = "";
+              objectId.required = false;
+            }
+            if (objectIdLabel) objectIdLabel.style.display = "none";
+
+            if (typeGame) typeGame.required = true;
+            if (platforms) platforms.required = true;
+            if (cross) cross.required = true;
+          }
+        }
+
+        // attach listener safely
+        actionSelect.addEventListener('change', toggleFormMode);
+
+        // initialize UI state
+        toggleFormMode();
+      });

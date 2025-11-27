@@ -35,12 +35,31 @@ app.get('/update-cobj', (req, res) => {
 // Process form submission
 app.post('/update-cobj', async (req, res) => {
 
-    // console.log("BODY:", req.body);
-    // console.log("NAME:", req.body.name);
+    const { action, objectId, name, type_of_game, gaming_platforms, is_it_cross_platforms_ } = req.body;
 
+    // Validations
+    if (!name || name.trim() === "") {
+        return res.send("❌ Name is required.");
+    }
 
-    const body = {
-        associations: [
+    if (action === "update" && (!objectId || objectId.trim() === "")) {
+        return res.send("❌ objectId is required for updates.");
+    }
+
+    // Build properties object
+    const properties = { name };
+
+    if (type_of_game) properties.type_of_game = type_of_game;
+    if (gaming_platforms) properties.gaming_platforms = gaming_platforms;
+    if (is_it_cross_platforms_) properties.is_it_cross_platforms_ = is_it_cross_platforms_;
+
+    let url = `https://api.hubapi.com/crm/v3/objects/2-53428859`;
+    let method = "POST";
+    let body = { properties };
+
+    // Add asspciations only when creating
+    if (action === "create") {
+        body.associations = [
             {
                 to: { id: "177531363999" },
                 types: [
@@ -50,34 +69,36 @@ app.post('/update-cobj', async (req, res) => {
                     }
                 ]
             }
-        ],
-        properties: {
-            name: req.body.name,
-            type_of_game: req.body.type_of_game,
-            gaming_platforms: req.body.gaming_platforms,
-            is_it_cross_platforms_: req.body.is_it_cross_platforms_,
-            hubspot_owner_id: "68530121"
-        },
-        labels: {}
-    };
+        ];
+    }
 
-    const url = "https://api.hubapi.com/crm/v3/objects/2-53428859";
+    // Si estamos actualizando, usamos PATCH + objectId
+    if (action === "update") {
+        method = "PATCH";
+        url = `https://api.hubapi.com/crm/v3/objects/2-53428859/${objectId}`;
+    }
 
     try {
-        const response = await axios.post(url, body, {
+        const response = await axios({
+            method,
+            url,
             headers: {
                 Authorization: `Bearer ${PRIVATE_APP_ACCESS}`,
                 "Content-Type": "application/json"
-            }
+            },
+            data: body
         });
-        console.log("RESPONSE HS:", response.data);
 
-    } catch (err) {
-        console.error("ERROR:", err.response?.data || err.message);
+        console.log("HUBSPOT RESPONSE:", response.data);
+
+        res.redirect('/');
+
+    } catch (error) {
+        console.error("ERROR HUBSPOT:", error.response?.data || error.message);
+        res.send("HubSpot error: " + JSON.stringify(error.response?.data));
     }
-
-    res.redirect('/');
 });
+
 
 
 // Start server
