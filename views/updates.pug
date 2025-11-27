@@ -1,11 +1,31 @@
 doctype html
 html 
     head 
-        title= `${title}`
+        title Integrating With HubSpot I Practicum
         meta(name="viewport" content="width=device-width, initial-scale=1")
         link(rel="stylesheet", href="/css/style.css")
     body    
-        h1 Update Custom Object Form | Integrating With HubSpot I Practicum.
+        h1 Update / Create Custom Object Form | Integrating With HubSpot I Practicum.
+        p Fill the form below to update or create a custom object in HubSpot.
+        
+        form#updateForm(action="/update-cobj" method="POST")
+            label(for="name") Name:
+            input(type="text" name="name" id="name")
+            br
+
+            label(for="type_of_game") Type of Game:
+            input(type="text" name="type_of_game" id="type_of_game")
+            br
+
+            label(for="gaming_platforms") Gaming Platforms:
+            input(type="text" name="gaming_platforms" id="gaming_platforms")
+            br
+
+            label(for="is_it_cross_platforms_") Cross-platform:
+            input(type="text" name="is_it_cross_platforms_" id="is_it_cross_platforms_")
+            br
+
+            button(type="submit") Submit
+            br  
 
         a(href="/") Return to the homepage
-
