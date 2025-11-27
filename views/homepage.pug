@@ -1,19 +1,44 @@
 doctype html
 html
   head
-    title= "Home"
-    link(rel="stylesheet", href="/css/style.css")
+    title= title
+    link(rel="stylesheet", href="/css/home-style.css")
+
   body
-    h1= title
+    .container
+      h1= title
 
-    a(href="/update-cobj") Create/Update custom object
+      a.add-btn(href="/update-cobj") Add to this table
 
-    if data && data.length
-      each item in data
-        div.card
-          h3= item.properties.name
-          p Type: #{item.properties.type_of_game}
-          p Platforms: #{item.properties.gaming_platforms}
-          a(href=`/update-cobj?id=${item.id}`) Editar
-    else
-      p No se encontraron objetos.
+      if data && data.length
+        table.data-table
+          thead
+            tr
+              th Name
+              th Type of Game
+              th Gaming Platforms
+              th Cross-platform
+              th Actions
+          tbody
+            each item in data
+              tr
+                td #{item.properties.name || '-'}
+
+                td
+                  span.tag #{item.properties.type_of_game || '-'}
+
+                td
+                  if item.properties.gaming_platforms
+                    each platform in item.properties.gaming_platforms.split(';')
+                      span.tag.platform #{platform.trim()}
+                  else
+                    span.null -
+
+                td
+                  span.boolean(class=item.properties.is_it_cross_platforms_ === "true" ? "true" : "false")
+                    #{item.properties.is_it_cross_platforms_}
+
+                td
+                  a.edit-btn(href=`/update-cobj?id=${item.id}`) Edit
+      else
+        p.empty No records found.

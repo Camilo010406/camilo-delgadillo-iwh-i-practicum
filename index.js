@@ -15,9 +15,39 @@ const PRIVATE_APP_ACCESS = process.env.HUBSPOT_ACCESS_TOKEN;
 
 // * Code for Route 1 goes here
 // Homepage
-app.get('/', (req, res) => {
-    res.render('homepage', { title: 'Home Page.' });
+app.get('/', async (req, res) => {
+
+  const url = 'https://api.hubapi.com/crm/v3/objects/2-53428859?limit=100&properties=name&properties=type_of_game&properties=gaming_platforms&properties=is_it_cross_platforms_';
+
+  const options = {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${PRIVATE_APP_ACCESS}`,
+      "Content-Type": "application/json"
+    }
+  };
+
+  try {
+    const response = await fetch(url, options);
+    const result = await response.json();
+
+    console.log("HUBSPOT DATA:", result.results);
+
+    res.render('homepage', {
+      title: 'Home Page',
+      data: result.results
+    });
+
+  } catch (error) {
+    console.error(error);
+
+    res.render('homepage', {
+      title: 'Home Page',
+      data: []
+    });
+  }
 });
+
 
 // TODO: ROUTE 2 - Create a new app.get route for the form to create or update new custom object data. Send this data along in the next route.
 

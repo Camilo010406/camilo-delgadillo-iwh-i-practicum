@@ -1,0 +1,265 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Story+Script&display=swap');
+
+:root {
+    --primary: lightseagreen;
+    --primary-dark: #008b8b;
+    --bg: #f5fefe;
+    --surface: #ffffff;
+    --border: #dcdcdc;
+    --text: #333;
+    --text-muted: #777;
+    --shadow: 0 10px 25px rgba(0,0,0,0.08);
+    --radius: 14px;
+}
+
+/* RESET GENERAL */
+* {
+    box-sizing: border-box;
+    font-family: 'Oswald', sans-serif;
+}
+
+body {
+    margin: 0;
+    background-color: var(--bg);
+    color: var(--text);
+}
+
+/* CONTAINER UNIFICADO */
+.container {
+    max-width: 1100px;
+    margin: 2.5rem auto;
+    padding: 2rem;
+    background-color: var(--surface);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+/* TITULOS */
+h1, h2 {
+    text-align: center;
+    background: linear-gradient(to right, var(--primary), var(--primary-dark));
+    color: white;
+    margin: 1rem auto 1.5rem;
+    padding: .6rem 1.5rem;
+    border-radius: var(--radius);
+    width: fit-content;
+    box-shadow: var(--shadow);
+}
+
+/* FORM wrappers */
+.form-wrapper {
+    max-width: 760px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: var(--surface);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+/* FORM ELEMENTS */
+label {
+    display: block;
+    margin-top: 1rem;
+    color: var(--text-muted);
+}
+
+input,
+select {
+    width: 100%;
+    padding: .55rem .8rem;
+    margin-top: .25rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    transition: 0.2s ease;
+    outline: none;
+}
+
+input:focus,
+select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(32,178,170,0.25);
+}
+
+/* PLATFORM SELECT BADGES */
+.platform-box {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: .5rem 0 1rem;
+    padding: .5rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+}
+
+.platform-option {
+    background-color: #222;
+    color: white;
+    border: 1px solid #555;
+    padding: 7px 14px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.platform-option:hover {
+    background-color: #444;
+}
+
+.platform-option.selected {
+    background-color: var(--primary);
+    color: black;
+    border-color: var(--primary);
+}
+
+/* FORM INFO BOX */
+p.form-info {
+    background: rgba(32,178,170,0.1);
+    border-left: 4px solid var(--primary);
+    padding: .6rem .8rem;
+    border-radius: var(--radius);
+    margin-top: 1rem;
+    color: var(--text-muted);
+}
+
+/* BUTTONS */
+button,
+input[type="submit"] {
+    margin-top: 1.4rem;
+    background: linear-gradient(to right, var(--primary), var(--primary-dark));
+    color: white;
+    border: none;
+    padding: .7rem 1.4rem;
+    border-radius: var(--radius);
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.2s ease;
+}
+
+button:hover,
+input[type="submit"]:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}
+
+/* LINKS */
+a {
+    display: inline-block;
+    margin-bottom: 1rem;
+    color: white;
+    background: var(--primary);
+    padding: .5rem 1.2rem;
+    border-radius: var(--radius);
+    text-decoration: none;
+    transition: 0.2s ease;
+}
+
+a:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+}
+
+/* ============================= */
+/* HOMEPAGE TABLE STYLING */
+/* ============================= */
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-top: 1.5rem;
+    box-shadow: var(--shadow);
+}
+
+.data-table th {
+    background-color: var(--primary);
+    color: white;
+    padding: 12px;
+    text-align: left;
+}
+
+.data-table td {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.data-table tr:hover {
+    background-color: #eafafa;
+}
+
+/* TAGS */
+.tag {
+    display: inline-block;
+    background-color: #cceeed;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    margin-right: 5px;
+    color: #004c4c;
+}
+
+.platform {
+    background-color: #b2ece7;
+}
+
+/* BOOLEAN */
+.boolean {
+    padding: 5px 12px;
+    border-radius: 20px;
+    color: white;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.boolean.true {
+    background-color: #4caf50;
+}
+
+.boolean.false {
+    background-color: #f44336;
+}
+
+/* EDIT BUTTON */
+.edit-btn {
+    background-color: #222;
+    padding: 6px 12px;
+    border-radius: 8px;
+    color: white;
+    text-decoration: none;
+    transition: .2s ease;
+}
+
+.edit-btn:hover {
+    background-color: black;
+}
+
+/* EMPTY STATE */
+.empty {
+    color: var(--text-muted);
+    margin-top: 2rem;
+    text-align: center;
+}
+
+/* CARDS */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1rem;
+}
+
+.card {
+    background: var(--surface);
+    padding: 1rem;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+.card h3 {
+    color: var(--primary-dark);
+}
+
+.card p {
+    font-size: .9rem;
+    color: var(--text-muted);
+}
